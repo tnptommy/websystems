@@ -9,13 +9,13 @@ Each lesson covers one topic with explanations, examples, and a cheat sheet.
 
 | Lesson | Topic | Status |
 |--------|-------|--------|
-| [Ed Lesson 1](./ed-lesson-1/README.md) | — | 🔜 Coming soon |
-| [Ed Lesson 2](./ed-lesson-2/README.md) | — | 🔜 Coming soon |
-| [Ed Lesson 3](./ed-lesson-3/README.md) | — | 🔜 Coming soon |
-| [Ed Lesson 4](./ed-lesson-4/README.md) | — | 🔜 Coming soon |
+| [Ed Lesson 1](./ed-lesson-1/README.md) | Bash: Getting Started | ✅ Available |
+| [Ed Lesson 2](./ed-lesson-2/README.md) | Vim Text Editor | ✅ Available |
+| [Ed Lesson 3](./ed-lesson-3/README.md) | Linux File Permissions | ✅ Available |
+| [Ed Lesson 4](./ed-lesson-4/README.md) | HTML & CSS | ✅ Available |
 | [Ed Lesson 5](./ed-lesson-5/README.md) | Bash: Piping, Redirection & Globbing | ✅ Available |
-| [Ed Lesson 6](./ed-lesson-6/README.md) | — | 🔜 Coming soon |
-| [Ed Lesson 7](./ed-lesson-7/README.md) | — | 🔜 Coming soon |
+| [Ed Lesson 6](./ed-lesson-6/README.md) | Bash Scripting | ✅ Available |
+| [Ed Lesson 7](./ed-lesson-7/README.md) | Data Analysis with Bash | ✅ Available |
 
 ---
 
@@ -33,19 +33,13 @@ Each lesson covers one topic with explanations, examples, and a cheat sheet.
 ```
 websystems/
 ├── README.md
-├── ed-lesson-1/
-├── ed-lesson-2/
-├── ed-lesson-3/
-├── ed-lesson-4/
-├── ed-lesson-5/        ← available now
-│   ├── README.md
-│   ├── 01-redirection.md
-│   ├── 02-pipe.md
-│   ├── 03-wildcards.md
-│   ├── 04-commands.md
-│   └── 05-summary.md
-├── ed-lesson-6/
-└── ed-lesson-7/
+├── ed-lesson-1/     Bash basics — pwd, cd, ls, cp, rm, redirection
+├── ed-lesson-2/     Vim — modes, navigation, editing, search & replace
+├── ed-lesson-3/     File permissions — ls -l, rwx, chmod, numeric permissions
+├── ed-lesson-4/     HTML & CSS — structure, selectors, box model, colours
+├── ed-lesson-5/     Piping, redirection, wildcards — |, >, >>, *, grep
+├── ed-lesson-6/     Bash scripting — variables, arithmetic, if, arguments
+└── ed-lesson-7/     Data analysis — cut, sort, grep regex, inline execution
 ```
 
 ---
