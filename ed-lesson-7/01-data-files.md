@@ -2,7 +2,7 @@
 
 > **Real data files are messy. Before you can analyse them, you need to clean them up.**
 
-← [Back to README](./README.md) · [Next: cut →](./02-cut.md)
+← [Back to README](./README.md) · [Next: sed →](./02-sed.md)
 
 ---
 
@@ -10,13 +10,15 @@
 
 Many data files are stored as plain text with columns separated by spaces or tabs.
 
-For example, a file of car prices might look like this:
+For example, a file of female names might look like this:
 
 ```
-Honda       18000    35.2    1
-Toyota      12000    28.7    2
-BMW         22000    18.1    3
+MARY       2.629   2.629    1
+PATRICIA   1.073   3.702    2
+LINDA      1.035   4.736    3
 ```
+
+Columns: NAME, FREQUENCY, CUMULATIVE FREQUENCY, RANK
 
 It is easy to read with your eyes — but very hard to process with `cut`.
 
@@ -26,11 +28,11 @@ It is easy to read with your eyes — but very hard to process with `cut`.
 
 The `cut` command splits each line by a **delimiter** — a single character that separates fields.
 
-If you tell `cut` the delimiter is a space, it treats **every single space** as a separator.  
+If you tell `cut` the delimiter is a space, it treats **every single space** as a separator.
 Multiple spaces between columns = many empty fields between the real data.
 
 ```bash
-echo "Honda       18000" | cut -f2 -d' '
+echo "MARY       2.629" | cut -f2 -d' '
 # (empty — the second "field" is just another space, not the number)
 ```
 
@@ -43,22 +45,22 @@ This does not work. You need a **single consistent delimiter** between each fiel
 The goal is to turn this:
 
 ```
-Honda       18000    35.2    1
+MARY       2.629   2.629    1
 ```
 
 into this:
 
 ```
-Honda,18000,35.2,1
+MARY,2.629,2.629,1
 ```
 
 Now `cut -d,` works perfectly.
 
 ---
 
-## How to do it — Vim substitution
+## Method 1 — Fix it in Vim
 
-Open the file in Vim, then use a substitution command to replace all whitespace with a comma:
+Open the file in Vim, then use a substitution command:
 
 ```
 :%s/\s\+/,/g
@@ -69,20 +71,20 @@ Breaking it down:
 | Part | Meaning |
 |------|---------|
 | `:%s` | Substitute across the whole file |
-| `/\s\+/` | Find: one or more whitespace characters (`\s` = any whitespace, `\+` = one or more) |
+| `/\s\+/` | Find: one or more whitespace characters |
 | `/,/` | Replace with: a comma |
 | `g` | Replace all occurrences on each line |
 
-**Step by step:**
+Step by step:
 
 ```bash
 # Copy the file to your home directory first
-cp /path/to/data.txt ~/data.txt
+cp /course/linuxgym/census/femalenames.txt ~/table.csv
 
 # Open in Vim
-vim ~/data.txt
+vim ~/table.csv
 
-# Run the substitution (in Command Mode)
+# Run the substitution (in Command Mode — press : first)
 :%s/\s\+/,/g
 
 # Save and quit
@@ -91,75 +93,72 @@ vim ~/data.txt
 
 ---
 
+## Method 2 — Fix it with `sed` (no Vim needed)
+
+```bash
+sed 's/\s\+/,/g' /course/linuxgym/census/femalenames.txt > ~/table.csv
+```
+
+One command — same result. You will learn `sed` in detail in [Topic 2](./02-sed.md).
+
+---
+
+## Watch out for leading and trailing spaces
+
+If the original file has spaces at the **start or end** of lines:
+
+```
+  MARY       2.629   2.629    1  
+```
+
+A simple replacement gives:
+
+```
+,MARY,2.629,2.629,1,
+```
+
+Fix — remove leading and trailing whitespace first in Vim:
+
+```
+:%s/^\s\+//g       ← remove whitespace at START of each line
+:%s/\s\+$//g       ← remove whitespace at END of each line
+:%s/\s\+/,/g       ← then replace internal whitespace with commas
+```
+
+Then check the result:
+
+```bash
+head -3 ~/table.csv
+tail -3 ~/table.csv
+```
+
+---
+
 ## Check the result
 
 ```bash
-cat ~/data.txt
-# Honda,18000,35.2,1
-# Toyota,12000,28.7,2
-# BMW,22000,18.1,3
+cat ~/table.csv
+# MARY,2.629,2.629,1
+# PATRICIA,1.073,3.702,2
+# LINDA,1.035,4.736,3
 ```
 
 Now each line has exactly one comma between fields — `cut` can work with this.
 
 ---
 
-## ⚠️ Watch out for leading/trailing spaces
+## Why name it `.csv`?
 
-If the original file has spaces at the **beginning or end** of lines, the substitution will add a comma there too:
-
-```
-  Honda       18000    35.2    1  
-```
-
-becomes:
-
-```
-,Honda,18000,35.2,1,
-```
-
-**Fix — remove leading/trailing whitespace first in Vim:**
-
-```
-:%s/^\s\+//g       ← remove whitespace at start of each line
-:%s/\s\+$//g       ← remove whitespace at end of each line
-:%s/\s\+/,/g       ← then replace internal whitespace with commas
-```
-
-Or combine the internal replacement after trimming:
-
-```
-:%s/\s\+/,/g
-```
-
-Then check the first and last few lines:
-
-```bash
-head -3 data.txt
-tail -3 data.txt
-```
-
----
-
-## Why save as `.csv`?
-
-CSV stands for **comma-separated values** — a standard format for structured data.  
-Naming your cleaned file `data.csv` makes it clear what format it is in.
-
-```bash
-cp ~/data.txt ~/data.csv
-```
-
-Or clean it directly into a new file.
+CSV stands for **comma-separated values** — a standard format for structured data.
+Naming your cleaned file `table.csv` makes it clear what format it is in.
 
 ---
 
 > 💡 **Try it now:**
-> 1. Create a test file: `echo -e "Honda       18000\nToyota      12000" > test.txt`
-> 2. Open in Vim: `vim test.txt`
-> 3. Run `:%s/\s\+/,/g` then `:wq`
-> 4. Check: `cat test.txt` — should show `Honda,18000` and `Toyota,12000`
+> 1. `cp /course/linuxgym/census/femalenames.txt ~/table.csv`
+> 2. `vim ~/table.csv` then run `:%s/\s\+/,/g` then `:wq`
+> 3. Check: `head -3 ~/table.csv`
 
 ---
 
-← [Back to README](./README.md) · [Next: cut →](./02-cut.md)
+← [Back to README](./README.md) · [Next: sed →](./02-sed.md)

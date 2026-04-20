@@ -14,22 +14,26 @@ The key skills are:
 - Cleaning messy data so tools like `cut` can work on it
 - Extracting specific columns from structured files
 - Searching with `grep` using regular expressions
-- Storing command output in variables using `` ` ` `` or `$()`
+- Storing command output in variables using `$()`
 - Writing scripts that combine all of the above
 
 ---
 
-## 📂 Topics
+## 📂 Topics — read in this order
 
 | # | Topic | What you learn |
 |---|-------|----------------|
-| 1 | [Data Files & the Problem with Spaces](./01-data-files.md) | Why whitespace breaks `cut`, how to fix it with Vim |
-| 2 | [Extracting Columns with `cut`](./02-cut.md) | `-f`, `-d`, extracting fields from structured data |
-| 3 | [Sorting with `sort`](./03-sort.md) | Alphabetical, numeric, reverse, by field |
-| 4 | [Pattern Matching with `grep`](./04-grep.md) | Basic search, regex, `^` `$` `\<` `\>`, options |
-| 5 | [Inline Command Execution](./05-inline-execution.md) | Backticks `` ` ` `` and `$()`, storing command output in variables |
-| 6 | [Putting It All Together — Scripts](./06-scripts.md) | Combining grep + cut + sort + variables in real scripts |
-| 7 | [Summary & Cheat Sheet](./07-summary.md) | All commands, patterns, check your work |
+| 1 | [Data Files & the Problem with Spaces](./01-data-files.md) | Why whitespace breaks `cut`, how to fix with Vim |
+| 2 | [Cleaning Data with `sed`](./02-sed.md) | Replace whitespace with commas — no Vim needed |
+| 3 | [Character Replacement with `tr`](./03-tr.md) | Simple character swapping and deletion |
+| 4 | [Extracting Columns with `cut`](./04-cut.md) | Get specific fields from structured data |
+| 5 | [Sorting with `sort`](./05-sort.md) | Alphabetical, numeric, reverse, by field |
+| 6 | [Pattern Matching with `grep`](./06-grep.md) | Search rows, regex, anchors, useful options |
+| 7 | [Column Processing with `awk`](./07-awk.md) | Filter AND extract in one command |
+| 8 | [Checking Output — `wc`, `head`, `tail`](./08-check.md) | Verify your results before submitting |
+| 9 | [Inline Command Execution](./09-inline-execution.md) | Store command output in variables with `$()` |
+| 10 | [Putting It All Together — Scripts](./10-scripts.md) | Combine everything into working scripts |
+| 11 | [Summary & Cheat Sheet](./11-summary.md) | All commands, patterns, and workflows in one place |
 
 ---
 
